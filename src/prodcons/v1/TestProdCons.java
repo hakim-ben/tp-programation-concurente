@@ -1,6 +1,5 @@
 package prodcons.v1;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
@@ -9,16 +8,16 @@ public class TestProdCons {
 	static int nProd, nCons, bufSz, prodTime, consTime, minProd, maxProd;
 	
 	static void loadData() throws InvalidPropertiesFormatException, IOException{
-		Properties propreties = new Properties();
-		propreties.loadFromXML(new FileInputStream("options.xml"));
-		propreties.loadFromXML(TestProdCons.class.getClassLoader().getResourceAsStream("options.xml"));
-		nProd = Integer.parseInt(propreties.getProperty("nProd"));
-		nCons = Integer.parseInt(propreties.getProperty("nCons"));
-		bufSz = Integer.parseInt(propreties.getProperty("bufSz"));
-		prodTime = Integer.parseInt(propreties.getProperty("prodTime"));
-		consTime = Integer.parseInt(propreties.getProperty("consTime"));
-		minProd = Integer.parseInt(propreties.getProperty("minProd"));
-		maxProd = Integer.parseInt(propreties.getProperty("maxProd"));
+		Properties properties = new Properties(); 
+		properties.loadFromXML(TestProdCons.class.getClassLoader().getResourceAsStream("/prodcons/options.xml"));
+
+		nProd = Integer.parseInt(properties.getProperty("nProd"));
+		nCons = Integer.parseInt(properties.getProperty("nCons"));
+		bufSz = Integer.parseInt(properties.getProperty("bufSz"));
+		prodTime = Integer.parseInt(properties.getProperty("prodTime"));
+		consTime = Integer.parseInt(properties.getProperty("consTime"));
+		minProd = Integer.parseInt(properties.getProperty("minProd"));
+		maxProd = Integer.parseInt(properties.getProperty("maxProd"));
 	}
 	public static void main(String[] args) throws InvalidPropertiesFormatException, IOException, InterruptedException{
 		loadData();
