@@ -1,4 +1,4 @@
-package prodcons.v1;
+package prodcons.v2;
 
 public class Consumer extends Thread{
 	ProdConsBuffer pcbuffer;
