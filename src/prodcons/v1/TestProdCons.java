@@ -10,8 +10,8 @@ public class TestProdCons {
 	
 	static void loadData() throws InvalidPropertiesFormatException, IOException{
 		Properties propreties = new Properties();
-		propreties.loadFromXML(new FileInputStream("test.xml"));
-
+		propreties.loadFromXML(new FileInputStream("options.xml"));
+		propreties.loadFromXML(TestProdCons.class.getClassLoader().getResourceAsStream("options.xml"));
 		nProd = Integer.parseInt(propreties.getProperty("nProd"));
 		nCons = Integer.parseInt(propreties.getProperty("nCons"));
 		bufSz = Integer.parseInt(propreties.getProperty("bufSz"));

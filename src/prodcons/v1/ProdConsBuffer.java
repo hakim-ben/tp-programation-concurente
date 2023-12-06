@@ -3,51 +3,49 @@ package prodcons.v1;
 public class ProdConsBuffer implements IProdConsBuffer{
 
 	int bufferSz;
-	Message buffer[];
-	int nfull;
-	int nempty;
+	Message buffer[]; 
+	int totalMessages;
+	//int nfull;
+	//int nempty;
 	int in = 0;
 	int out = 0;
-	
+	int cfull; //nombre de case rempli
+
 	public ProdConsBuffer(int bufferSz) {
-		this.bufferSz = bufferSz;
 		this.buffer = new Message[bufferSz];
-		this.nfull = bufferSz;
-		this.nempty = 0;
-	}
+		this.cfull=0;
+}
 
 	
 	public synchronized void put(Message msg) throws InterruptedException {
-		while (nfull == 0) {
+		while (cfull >= buffer.length) {
 			wait();
 		}
 		buffer[in] = msg;
-		in = (in + 1) % bufferSz;
-		nempty++;
-		nfull--;
+		in = (in + 1) % buffer.length;
+		cfull++; 
+		totalMessages++;  // Mise à jour du nombre total de messages
 		notifyAll();		
 	}
 
 	
 	public synchronized Message get() throws InterruptedException {
-		while (nempty == 0) {
+		while ( cfull == 0) {
 			wait();
 		}
 		Message msg = buffer[out];
-		out = (out + 1) % bufferSz;
-		nempty--;
-		nfull++;
+		out = (out + 1) % buffer.length;
+		cfull--;
 		notifyAll();
 		return msg;
 	}
 
-	
+
 	public int nmsg() {
-		return nempty;
+		return cfull;
 	}
 
-	
 	public int totmsg() {
-		return 0;
+		return totalMessages;
 	}
 }
