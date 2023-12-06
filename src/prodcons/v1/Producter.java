@@ -30,7 +30,8 @@ public class Producter extends Thread{
 			//on envoie un nouveau message dans le buffer 
 			m = new Message(this.msg + Thread.currentThread().getId());
 			try {
-				pcbuffer.put(m);
+				pcbuffer.put(m); 
+				System.err.println(m);
 				Thread.sleep(ProdTime); 
 			} catch (InterruptedException e) {
 			e.printStackTrace();

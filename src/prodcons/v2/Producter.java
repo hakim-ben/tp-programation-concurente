@@ -19,12 +19,13 @@ public class Producter extends Thread{
 		this.ProdTime=ProdTime;
 		Random rand = new Random(); 
 		nbmProd=rand.nextInt(maxProd-minProd)+minProd;
-
+		this.setDaemon(true);
 		start();
 	}
 	
 	public void run() {  
-		Message m;
+		Message m; 
+
 		for (int i = 0; i < nbmProd; i++) {
 
 			//on envoie un nouveau message dans le buffer 

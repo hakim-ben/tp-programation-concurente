@@ -13,7 +13,8 @@ public class Consumer extends Thread{
 	
 	public void run() {
 		try {
-			msg = pcbuffer.get(); 
+			msg = pcbuffer.get();  
+			System.err.println("hello");
 			Thread.sleep(this.consTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
