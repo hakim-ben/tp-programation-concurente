@@ -22,7 +22,6 @@ public class TestProdCons {
 	public static void main(String[] args) throws InvalidPropertiesFormatException, IOException, InterruptedException{
 		loadData();
 		ProdConsBuffer pcbuffer = new ProdConsBuffer(bufSz);
-		Message msg1 = new Message("test1");
 		
 		Producter[] prods = new Producter[nProd];
 		Consumer[] cons = new Consumer[nCons];
