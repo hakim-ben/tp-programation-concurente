@@ -29,9 +29,9 @@ public class Producter extends Thread{
 
 			//on envoie un nouveau message dans le buffer 
 			m = new Message(this.msg + Thread.currentThread().getId());
-			try {
+			try { 
+				System.err.println("exec du thread producter de id :"+ Thread.currentThread().getId());
 				pcbuffer.put(m); 
-				System.err.println(m);
 				Thread.sleep(ProdTime); 
 			} catch (InterruptedException e) {
 			e.printStackTrace();

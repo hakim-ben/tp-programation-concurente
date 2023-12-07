@@ -27,7 +27,8 @@ public class TestProdCons {
 			prodTime = 10;
 			consTime = 10;
 			minProd = 5;
-			maxProd = 500;
+			maxProd = 10;
+
 		}
 
 		/* Création du buffer partagé */
@@ -58,19 +59,23 @@ public class TestProdCons {
 				e.printStackTrace();
 			}
 		}
-
-		/* attente des Consumer */
-		for (Consumer cr : listCons) {
-			try {
-				cr.join();
-			} catch (InterruptedException e) {
-				System.err.println("Erreur durant attente d'un producer : " + cr.getName());
-				e.printStackTrace();
-			}
-		}
-		
-		System.out.println("Should not happend !!");
-
+	while(buff.nmsg() != 0) { 
+		System.out.println("Messages dans le buffer : " + buff.nmsg());
+		Thread.yield();
 	}
+	
+	// NB MESSAGE PRODUIT
+	System.out.println("\nNB MESSAGE PRODUIT : " + buff.totmsg());
+	
+	// NB MESSAGE TRAITE
+	System.out.println("NB MESSAGE TRAITE : " + Consumer.nbrTraite);
+	
+	if(buff.totmsg() != Consumer.nbrTraite) {			
+		System.err.println("SYNCHONIZATION PROBLEM");
+	}else {
+		System.out.println("That's all folks !!");
+	} 
+}
+
 
 }

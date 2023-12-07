@@ -1,4 +1,4 @@
-package prodcons.v1;
+package prodcons.v5;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,13 +21,14 @@ public class TestProdCons {
 			maxProd = Integer.parseInt(properties.getProperty("maxProd"));
 		} catch (IOException | NullPointerException e) {
 			System.err.println("Impossible de charger le fichier option, les valeurs par défaut vont etres prises !");
-			nProd = 10;
-			nCons = 15;
-			bufSz = 5;
+			nProd = 15;
+			nCons = 10;
+			bufSz = 1;
 			prodTime = 10;
 			consTime = 10;
 			minProd = 5;
-			maxProd = 8;
+			maxProd = 10;
+
 		}
 
 		/* Création du buffer partagé */
@@ -58,19 +59,23 @@ public class TestProdCons {
 				e.printStackTrace();
 			}
 		}
-
-		/* attente des Consumer */
-		for (Consumer cr : listCons) {
-			try {
-				cr.join();
-			} catch (InterruptedException e) {
-				System.err.println("Erreur durant attente d'un producer : " + cr.getName());
-				e.printStackTrace();
-			}
-		}
-		
-		System.out.println("Should not happend !!");
-
+	while(buff.nmsg() != 0) { 
+		System.out.println("Messages dans le buffer : " + buff.nmsg());
+		Thread.yield();
 	}
+	
+	// NB MESSAGE PRODUIT
+	System.out.println("\nNB MESSAGE PRODUIT : " + buff.totmsg());
+	
+	// NB MESSAGE TRAITE
+	System.out.println("NB MESSAGE TRAITE : " + Consumer.nbrTraite);
+	
+	if(buff.totmsg() != Consumer.nbrTraite) {			
+		System.err.println("SYNCHONIZATION PROBLEM");
+	}else {
+		System.out.println("That's all folks !!");
+	} 
+}
+
 
 }
