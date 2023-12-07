@@ -4,11 +4,11 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 	//liste des messages
 	private Message buffer[];  
-	//nombre de cases vide
+	//nombre de cases vides
 	private int free; 
-	//quoue et tete de la fifo
+	//queue et tete de la fifo
 	private int in,out; 
-	//nombre totale des messages rajouté depuis la creation du buffer
+	//nombre total de messages rajoutés depuis la création du buffer
 	private int totalMessages;
   
     /*
@@ -30,7 +30,8 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 	
 	public synchronized void put(Message msg) throws InterruptedException {
-		System.err.println("thread est rendtré dans put " + Thread.currentThread().getId() +"place libre :"+free);
+		System.err.println("thread " + Thread.currentThread().getId() + " est rentré dans put," + " places libres : "+free);
+		 
  
 		while (free<=0) {
 			wait();
@@ -49,18 +50,18 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 	
 	public synchronized Message get() throws InterruptedException {
-		System.err.println("thread est rendtré dans get " + Thread.currentThread().getId() +"place libre :"+free);
+		System.err.println("thread " + Thread.currentThread().getId() + " est rentré dans get," + " places libres : "+free);
  
 		
 		while ( free >= buffer.length) {
 			wait();
 		} 
-		System.err.println("un message va etre enlvé  par le thread : " + Thread.currentThread().getId());
+		System.err.println("un message va etre enlevé  par le thread : " + Thread.currentThread().getId());
 
 		Message msg = buffer[out];
 		out = (out + 1) % buffer.length;
 		free++; 
-		System.err.println("un message enlvé par le thread: " + Thread.currentThread().getId());
+		System.err.println("un message a été enlevé par le thread: " + Thread.currentThread().getId());
 
 		notifyAll();
 		return msg;

@@ -33,7 +33,7 @@ public class TestProdCons {
 		/* Création du buffer partagé */
 		ProdConsBuffer buff = new ProdConsBuffer(bufSz);
 
-		/* création des Consumer */
+		/* Création des Consumer */
 		ArrayList<Consumer> listCons = new ArrayList<>();
 		Consumer c;
 		for (int i = 0; i < nCons; i++) {
@@ -41,7 +41,7 @@ public class TestProdCons {
 			listCons.add(c);
 		}
 
-		/* création des Producers */
+		/* Création des Producers */
 		ArrayList<Producter> listProd = new ArrayList<>();
 		Producter p;
 		for (int i = 0; i < nProd; i++) {
@@ -49,7 +49,7 @@ public class TestProdCons {
 			listProd.add(p);
 		}
 
-		/* attente des Producer */
+		/* Attente des Producer */
 		for (Producter pr : listProd) {
 			try {
 				pr.join();
@@ -59,7 +59,7 @@ public class TestProdCons {
 			}
 		}
 
-		/* attente des Consumer */
+		/* Attente des Consumer */
 		for (Consumer cr : listCons) {
 			try {
 				cr.join();

@@ -59,16 +59,13 @@ public class TestProdCons {
 				e.printStackTrace();
 			}
 		}
-	while(buff.nmsg() != 0) { 
-		System.out.println("Messages dans le buffer : " + buff.nmsg());
-		Thread.yield();
-	}
+	
 	
 	// NB MESSAGE PRODUIT
-	System.out.println("\nNB MESSAGE PRODUIT : " + buff.totmsg());
+	System.out.println("\nNB MESSAGES PRODUITS : " + buff.totmsg());
 	
 	// NB MESSAGE TRAITE
-	System.out.println("NB MESSAGE TRAITE : " + Consumer.nbrTraite);
+	System.out.println("NB MESSAGES TRAITES : " + Consumer.nbrTraite);
 	
 	if(buff.totmsg() != Consumer.nbrTraite) {			
 		System.err.println("SYNCHONIZATION PROBLEM");

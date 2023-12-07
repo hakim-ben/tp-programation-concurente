@@ -18,12 +18,15 @@ public class Consumer extends Thread{
 
 	}
 	public void run() {
-		try {
-			msg = pcbuffer.get();  
-			incrnbrTraite();
-			Thread.sleep(this.consTime);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		while(true) {
+			try {
+				msg = pcbuffer.get();  
+				incrnbrTraite();
+				Thread.sleep(this.consTime);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 } 

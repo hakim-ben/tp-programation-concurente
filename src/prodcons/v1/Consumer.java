@@ -12,12 +12,15 @@ public class Consumer extends Thread{
 	}
 	
 	public void run() {
-		try { 
-			System.err.println("exec du thread consummer de id :"+ Thread.currentThread().getId());
-			msg = pcbuffer.get();  
-			Thread.sleep(this.consTime);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		while (true) {
+			try { 
+				System.err.println("exec du thread consummer de id :"+ Thread.currentThread().getId());
+				msg = pcbuffer.get();  
+				Thread.sleep(this.consTime);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-	}
+		}
+	
 } 
