@@ -32,7 +32,7 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 	
 	public synchronized void put(Message msg ,int n) throws InterruptedException { 
-		System.err.println("thread d'id" + Thread.currentThread().getId() +"est rendtré dans put, place libre :"+ free);
+		System.out.println("thread " + Thread.currentThread().getId() + " est rentré dans put, "  +" place libre :"+free);
 //si un autre producteur n'a pas terminé de produire ses n msg
 		while (free<=0 || NMsgPut) { 
 			
@@ -49,7 +49,7 @@ for(int i=0;i<n;i++){
 		in = (in + 1) % buffer.length; 
 		free--;
 		totalMessages++; 
-		System.err.println("le msg d'id"+ msg.hashCode() +" été rajouté par le thread: " + Thread.currentThread().getId() );
+		System.err.println("le msg d'id"+ msg.hashCode() +"a été rajouté par le thread: " + Thread.currentThread().getId() );
 
 		notifyAll();}	 
 		// on redonne la permission au autre put de marcher
@@ -58,7 +58,7 @@ for(int i=0;i<n;i++){
 			
 		//on arrete le producteur tant que pas tout les msg qu'il a produit n'ont pas etait consomé
 			while (msg.getOccurInBuffer() > 0) { 
-			System.err.println("le thread d'id: " + Thread.currentThread().getId() +"est bloqué car il rest" + msg.getOccurInBuffer()+ " examplaire du msg qu'il a crée"  );
+			System.err.println("le thread d'id: " + Thread.currentThread().getId() +"est bloqué car il reste" + msg.getOccurInBuffer()+ " examplaire du msg qu'il a crée"  );
 				wait(); 
 			}
 			notifyAll();
@@ -67,7 +67,7 @@ for(int i=0;i<n;i++){
 
 	
 	public synchronized Message get() throws InterruptedException { 
-		System.err.println("thread est rendtré dans get " + Thread.currentThread().getId() +"place libre :"+free);
+		System.out.println("thread " + Thread.currentThread().getId() + " est rentré dans get, "  +" place libre :"+free);
 //on attend tant que le buffer est vide ou un consomateur a kmsg est entrains de consomer
 		while ( free >= buffer.length || kmsgGet) {
 			wait();
@@ -76,7 +76,7 @@ for(int i=0;i<n;i++){
 		msg.removecopy();
 		out = (out + 1) % buffer.length;
 		free++; 
-		System.err.println("un seul message enlvé par le thread avec get() : " + Thread.currentThread().getId());
+		System.err.println("un seul message a été enlevé par le thread avec get() : " + Thread.currentThread().getId());
 	    //on attend que le msg soit completement enlvé pour poursuivre 
 		while (msg.getOccurInBuffer() > 0) {
 				wait();
@@ -120,7 +120,7 @@ for(int i=0;i<n;i++){
 				wait(); 
 			kmsgGet = true;
 			}
-		System.err.println("un message enlvé par le thread a get("+ k + ") : " + Thread.currentThread().getId());
+		System.out.println("un message a été enlevé par le thread a get("+ k + ") : " + Thread.currentThread().getId());
 		notifyAll();
 	}
 
