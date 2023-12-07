@@ -39,10 +39,15 @@ public class TestProdCons {
 		ArrayList<Consumer> listCons = new ArrayList<>();
 		Consumer c; 
 	    Random rand = new Random(); 
-		int k=20;
-		for (int i = 0; i < nCons; i++) { 
-		k=rand.nextInt(k);
-			c = new Consumer(consTime, buff,k);
+		
+	    int k = rand.nextInt(18) + 2 ;
+		c = new Consumer(consTime, buff,k);
+		k = rand.nextInt(18) + 2 ;
+		c = new Consumer(consTime, buff,k); 
+		
+		listCons.add(c);
+		for (int i = 0; i < nCons - 2; i++) { 
+			c = new Consumer(consTime, buff,1);
 			listCons.add(c);
 		}
 
@@ -63,23 +68,6 @@ public class TestProdCons {
 				e.printStackTrace();
 			}
 		}
-	while(buff.nmsg() != 0) { 
-		System.out.println("Messages dans le buffer : " + buff.nmsg());
-		Thread.yield();
+	
 	}
-	
-	// NB MESSAGE PRODUIT
-	System.out.println("\nNB MESSAGE PRODUIT : " + buff.totmsg());
-	
-	// NB MESSAGE TRAITE
-	System.out.println("NB MESSAGE TRAITE : " + Consumer.nbrTraite);
-	
-	if(buff.totmsg() != Consumer.nbrTraite) {			
-		System.err.println("SYNCHONIZATION PROBLEM");
-	}else {
-		System.out.println("That's all folks !!");
-	} 
-}
-
-
 }

@@ -43,7 +43,7 @@ public class TestProdCons {
 	    int k = rand.nextInt(18) + 2 ;
 		c = new Consumer(consTime, buff,k);
 		k = rand.nextInt(18) + 2 ;
-		c = new Consumer(consTime, buff,4);
+		c = new Consumer(consTime, buff,k); 
 		
 		listCons.add(c);
 		for (int i = 0; i < nCons - 2; i++) { 

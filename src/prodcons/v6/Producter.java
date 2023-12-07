@@ -19,8 +19,9 @@ private int n;
 		this.msg = msg; 
 		this.ProdTime=ProdTime;
 		Random rand = new Random(); 
-		nbmProd=rand.nextInt(maxProd-minProd)+minProd; 
-		this.n=rand.nextInt(20);
+		nbmProd=rand.nextInt(maxProd-minProd)+minProd;
+		this.n=rand.nextInt(20); //  
+		System.err.println("on a cree un  producteur " + this.getId() + "qui fait "+ n +" copie");
 		this.setDaemon(true); //on met le consomateur en thread pour pouvoir areter le programme meme si il reste des consomateurs 
 		start();
 	}

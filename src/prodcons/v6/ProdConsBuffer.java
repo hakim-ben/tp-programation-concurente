@@ -32,9 +32,10 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 	
 	public synchronized void put(Message msg ,int n) throws InterruptedException { 
-		System.err.println("thread est rendtré dans put " + Thread.currentThread().getId() +"place libre :"+free);
+		System.err.println("thread d'id" + Thread.currentThread().getId() +"est rendtré dans put, place libre :"+ free);
 //si un autre producteur n'a pas terminé de produire ses n msg
-		while (free<=0 || NMsgPut) {
+		while (free<=0 || NMsgPut) { 
+			
 			wait();
 		}  
 		NMsgPut=true; 
@@ -43,16 +44,12 @@ for(int i=0;i<n;i++){
 	while (free <= 0) {
 		wait();
 	}
-
-
-
-		System.err.println("un message va etre rajouté par le thread: " + Thread.currentThread().getId());
-		buffer[in] = msg; 
+		buffer[in] = msg;
 		msg.addcopy();
 		in = (in + 1) % buffer.length; 
 		free--;
 		totalMessages++; 
-		System.err.println("un message  a ete rajouté par le thread: " + Thread.currentThread().getId());
+		System.err.println("le msg d'id"+ msg.hashCode() +" été rajouté par le thread: " + Thread.currentThread().getId() );
 
 		notifyAll();}	 
 		// on redonne la permission au autre put de marcher
@@ -60,8 +57,9 @@ for(int i=0;i<n;i++){
 			notifyAll();
 			
 		//on arrete le producteur tant que pas tout les msg qu'il a produit n'ont pas etait consomé
-			while (msg.getOccurInBuffer() > 0) {
-				wait();
+			while (msg.getOccurInBuffer() > 0) { 
+			System.err.println("le thread d'id: " + Thread.currentThread().getId() +"est bloqué car il rest" + msg.getOccurInBuffer()+ " examplaire du msg qu'il a crée"  );
+				wait(); 
 			}
 			notifyAll();
 	
@@ -99,7 +97,7 @@ for(int i=0;i<n;i++){
 
 
 	@Override
-	public Message[] get(int k) throws InterruptedException {
+	public synchronized Message[] get(int k) throws InterruptedException {
  //il dois attendre quand soit y'a pas de msg ou bien il a consomé un nmsg  ou bien un 
  //le premier while je le met juste pour tester qu'il y'a pas un autre kget 
 		while (kmsgGet) {
