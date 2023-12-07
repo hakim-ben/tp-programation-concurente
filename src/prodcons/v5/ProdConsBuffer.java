@@ -74,7 +74,7 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 
 	@Override
-	public Message[] get(int k) throws InterruptedException {
+	public synchronized Message[] get(int k) throws InterruptedException {
 		//while pour mettre en pause les consomers tant qu'un est deja en production
 		while (kmsgGet) {
 			wait();
@@ -83,14 +83,19 @@ public class ProdConsBuffer implements IProdConsBuffer{
 		kmsgGet = true; 
 		Message[] M= new Message[k]; 
 		for(int i=0;i<k;i++){ 
+			while (buffer [out] == null) {
+			wait();
+			}
 		M[i] = buffer[out]; 
 
 		out = (out + 1) % buffer.length;
+		buffer[out] = null;
 		free++; 
-		System.err.println("un message enlvé par le thread: " + Thread.currentThread().getId());
+		System.out.println("un message enlevé par le thread: " + Thread.currentThread().getId() + " via get " + k);
+		}
+		
 
-		notifyAll(); 
-	}   
+		//notifyAll();    
 
 	//on remet le bolean a false car le consomateur a terminé de produire kmsg les autres consomateur peuvent retravailler
 	    kmsgGet = false;

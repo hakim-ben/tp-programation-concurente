@@ -19,17 +19,20 @@ public class Consumer extends Thread{
 
 	}
 	public void run() {
-		try { 
-			if(k==0){
-			msg = pcbuffer.get();  
-			incrnbrTraite();
-			Thread.sleep(this.consTime);} 
-			else if(k>0){ 
-			m=pcbuffer.get(k);
-			Thread.sleep(this.consTime);} 
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		while (true) {
+			try { 
+				if(k<=1){
+				msg = pcbuffer.get();  
+				incrnbrTraite();
+				Thread.sleep(this.consTime);} 
+				else if(k>1){ 
+				m=pcbuffer.get(k);
+				Thread.sleep(this.consTime);} 
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 } 
