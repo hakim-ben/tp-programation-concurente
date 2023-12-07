@@ -18,6 +18,7 @@ public class Consumer extends Thread{
 		nbrTraite++; 
 
 	}
+
 	public void run() { 
 		while(true){
 		try { 
@@ -32,5 +33,6 @@ public class Consumer extends Thread{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}}
+
 	}
 } 
