@@ -19,7 +19,9 @@ public class Consumer extends Thread{
 	}
 	public void run() {
 		try {
-			msg = pcbuffer.get();  
+			msg = pcbuffer.get();    
+
+			System.err.println("consomateur " + Thread.currentThread().getId());
 			incrnbrTraite();
 			Thread.sleep(this.consTime);
 		} catch (InterruptedException e) {

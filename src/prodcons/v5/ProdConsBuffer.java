@@ -6,11 +6,12 @@ public class ProdConsBuffer implements IProdConsBuffer{
 	private Message buffer[];  
 	//nombre de cases vide
 	private int free; 
-	//quoue et tete de la fifo
+	//queue et tete de la  file fifo
 	private int in,out; 
 	//nombre totale des messages rajouté depuis la creation du buffer
-	private int totalMessages;
-  
+	private int totalMessages; 
+	//boolean pour voir si un consomateur produit plusieurs message pour gerer la synchro
+	private boolean kmsgGet=false;
     /*
   * Opération | Pre-action  | Garde                 | Post-action  
   * 
@@ -74,7 +75,18 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 	@Override
 	public Message[] get(int k) throws InterruptedException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'get'");
+		//while pour mettre en pause les consomers tant qu'un est deja en 
+		while (kmsgGet) {
+			wait();
+		}  
+		kmsgGet = true;
+		System.err.println("un message va etre enlvé  par le thread : " + Thread.currentThread().getId());
+		Message msg = buffer[out];
+		out = (out + 1) % buffer.length;
+		free++; 
+		System.err.println("un message enlvé par le thread: " + Thread.currentThread().getId());
+
+		notifyAll();
+		return msg;
 	} 
 }

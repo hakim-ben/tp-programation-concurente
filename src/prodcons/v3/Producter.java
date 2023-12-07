@@ -29,7 +29,8 @@ public class Producter extends Thread{
 		for (int i = 0; i < nbmProd; i++) {
 
 			//on envoie un nouveau message dans le buffer 
-			m = new Message(this.msg + Thread.currentThread().getId());
+			m = new Message(this.msg + Thread.currentThread().getId()); 
+			System.err.println("producteur " + m);
 			try {
 				pcbuffer.put(m);
 				Thread.sleep(ProdTime); 

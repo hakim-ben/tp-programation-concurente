@@ -10,6 +10,8 @@ public class ProdConsBuffer implements IProdConsBuffer{
 	private int in,out; 
 	//nombre totale des messages rajouté depuis la creation du buffer
 	private int totalMessages;  
+	//nombre de message dans le buffer  
+	private int nbMessageBuf;
 
 	//pour v3 on rajoute les semaphore de gestion de recup et et d'ajout et sc mutex 
 	private Semaphore notFull;
@@ -30,7 +32,8 @@ public class ProdConsBuffer implements IProdConsBuffer{
 		this.buffer = new Message[bufferSz];
 		this.in=0; 
 		this.out=0; 
-		totalMessages=0; 
+		totalMessages=0;  
+		nbMessageBuf=0;
 		this.notFull = new Semaphore(bufferSz);
 		this.notEmpty = new Semaphore(0);
 
@@ -43,7 +46,8 @@ public class ProdConsBuffer implements IProdConsBuffer{
 		this.mutex.acquire();
 
 		buffer[in] = msg;
-		in = (in + 1) % buffer.length;
+		in = (in + 1) % buffer.length; 
+		nbMessageBuf++;
 		totalMessages++; 
  
 	    this.mutex.release();		
@@ -59,7 +63,8 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 		Message msg = buffer[out];
 		out = (out + 1) % buffer.length;
-	 
+	 	nbMessageBuf--; 
+
 		this.mutex.release();
 		this.notFull.release();
 
@@ -68,12 +73,7 @@ public class ProdConsBuffer implements IProdConsBuffer{
 
 
 	public int nmsg() { 
-		int diff = in - out;
-		if (diff >= 0) {
-			return diff;
-		} else {
-			return buffer.length + diff+1;
-		}
+	return nbMessageBuf;
 	}
 
 	public int totmsg() {

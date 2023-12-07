@@ -27,8 +27,8 @@ public class TestProdCons {
 			prodTime = 10;
 			consTime = 10;
 			minProd = 5;
-			maxProd = 10;
-
+			maxProd = 10; 
+		
 		}
 
 		/* Création du buffer partagé */
