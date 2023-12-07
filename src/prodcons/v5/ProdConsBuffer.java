@@ -39,7 +39,7 @@ public class ProdConsBuffer implements IProdConsBuffer{
 		System.err.println("un message va etre rajouté par le thread: " + Thread.currentThread().getId());
 		buffer[in] = msg;
 		in = (in + 1) % buffer.length;
-		free--; 
+		free--;
 		totalMessages++; 
 		System.err.println("un message  a ete rajouté par le thread: " + Thread.currentThread().getId());
 

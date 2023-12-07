@@ -3,6 +3,7 @@ package prodcons.v5;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Random;
 
 public class TestProdCons {
 
@@ -36,9 +37,12 @@ public class TestProdCons {
 
 		/* création des Consumer */
 		ArrayList<Consumer> listCons = new ArrayList<>();
-		Consumer c;
-		for (int i = 0; i < nCons; i++) {
-			c = new Consumer(consTime, buff);
+		Consumer c; 
+	    Random rand = new Random(); 
+		int k=20;
+		for (int i = 0; i < nCons; i++) { 
+		k=rand.nextInt(k);
+			c = new Consumer(consTime, buff,k);
 			listCons.add(c);
 		}
 
